@@ -1,0 +1,206 @@
+{
+  "designSystemProfile": {
+    "name": "Retrograde Pixel",
+    "version": "1.1.0",
+    "description": "A design system blending 8-bit nostalgia with modern, vibrant gradients. It features a dark mode theme, pixel-perfect typography, and gradient-based accents. The core aesthetic relies on sharp edges, pixelated borders, and colorful text/iconography against a dark background.",
+    "global": {
+      "backgroundColor": "#1A1A1A",
+      "fontFamily": "'Pixel Operator', 'Press Start 2P', 'Silkscreen', 'VT323', monospace",
+      "globalTextColor": "#EAEAEA",
+      "notes": "No shadows, blurs, or border-radius should be used anywhere in this design system to maintain the sharp, pixelated aesthetic. All elements should appear crisp."
+    },
+    "palettes": {
+      "gradients": {
+        "primary": {
+          "name": "Sunset",
+          "css": "linear-gradient(90deg, #FFD166 0%, #F79F79 50%, #F786A3 100%)",
+          "colors": ["#FFD166", "#F79F79", "#F786A3"]
+        },
+        "secondary": {
+          "name": "Orchid",
+          "css": "linear-gradient(90deg, #F79F79 0%, #D497E8 50%, #A29BFE 100%)",
+          "colors": ["#F79F79", "#D497E8", "#A29BFE"]
+        },
+        "tertiary": {
+          "name": "Evergreen",
+          "css": "linear-gradient(90deg, #97CC04 0%, #5DDAA4 50%, #46B2E8 100%)",
+          "colors": ["#97CC04", "#5DDAA4", "#46B2E8"]
+        }
+      },
+      "utilityColors": {
+        "textDefault": "#EAEAEA",
+        "textMuted": "#A0A0A0",
+        "divider": "#666666"
+      }
+    },
+    "elementStyling": {
+      "typography": {
+        "h1": {
+          "comment": "For main page titles, e.g., 'RETROSPECTIVE'.",
+          "fontFamily": "inherit",
+          "fontSize": "32px",
+          "fontWeight": "400",
+          "textTransform": "uppercase",
+          "color": "transparent",
+          "background": "var(--gradient-primary)",
+          "backgroundClip": "text",
+          "notes": "The gradient is applied to the text fill, not the background of a container."
+        },
+        "h2": {
+          "comment": "For card titles, e.g., 'WHAT WENT WELL'.",
+          "fontFamily": "inherit",
+          "fontSize": "20px",
+          "fontWeight": "400",
+          "textTransform": "uppercase",
+          "color": "transparent",
+          "notes": "The text fill should be a gradient. The specific gradient is determined by the parent card's context (e.g., primary, secondary, tertiary)."
+        },
+        "p": {
+          "comment": "For body content inside cards or general text.",
+          "fontFamily": "inherit",
+          "fontSize": "16px",
+          "fontWeight": "400",
+          "color": "var(--text-default)",
+          "lineHeight": "1.5"
+        },
+        "a": {
+          "comment": "For navigation and other interactive links.",
+          "fontFamily": "inherit",
+          "fontSize": "18px",
+          "color": "var(--text-muted)",
+          "textDecoration": "none",
+          "states": {
+            "hover": {
+              "color": "var(--text-default)",
+              "textDecoration": "underline"
+            },
+            "active": {
+              "color": "var(--gradient-primary)"
+            }
+          }
+        }
+      },
+      "cards": {
+        "comment": "The core content container. The visual container is defined by its border, not a background fill.",
+        "container": {
+          "background": "transparent",
+          "padding": "24px",
+          "borderStyle": "solid",
+          "borderWidth": "3px",
+          "imageRendering": "pixelated",
+          "borderImageSlice": "1",
+          "borderRadius": "0",
+          "notes": {
+            "critical": "DO NOT apply background color or background gradients to the card itself. The card's content area is transparent, showing the global page background.",
+            "implementation": "The gradient is applied ONLY to the border. Use the 'border-image-source' CSS property with the appropriate gradient."
+          }
+        },
+        "variants": {
+          "primary": {
+            "comment": "For positive or primary content, e.g., 'What Went Well'.",
+            "borderImageSource": "var(--gradient-primary)",
+            "headingTextColor": "var(--gradient-primary)"
+          },
+          "secondary": {
+            "comment": "For cautionary or neutral content, e.g., 'What Didn't Go Well'.",
+            "borderImageSource": "var(--gradient-secondary)",
+            "headingTextColor": "var(--gradient-secondary)"
+          },
+          "tertiary": {
+            "comment": "For ideas or forward-looking content, e.g., 'Ideas for Improvement'.",
+            "borderImageSource": "var(--gradient-tertiary)",
+            "headingTextColor": "var(--gradient-tertiary)"
+          }
+        }
+      },
+      "buttons": {
+        "comment": "Interactive elements for actions. Hover states should provide clear feedback.",
+        "baseStyle": {
+          "fontFamily": "inherit",
+          "fontSize": "16px",
+          "padding": "12px 24px",
+          "border": "none",
+          "borderRadius": "0",
+          "cursor": "pointer"
+        },
+        "primary": {
+          "comment": "PROPOSED STYLE for primary actions, e.g., 'Submit', 'Create'.",
+          "background": "var(--gradient-primary)",
+          "color": "#1A1A1A",
+          "fontWeight": "bold",
+          "states": {
+            "hover": {
+              "transform": "scale(1.05)",
+              "boxShadow": "0 0 15px rgba(255, 209, 102, 0.5)"
+            }
+          }
+        },
+        "textLink": {
+          "comment": "For secondary actions, like '+ Add a note'.",
+          "background": "transparent",
+          "color": "var(--text-default)",
+          "padding": "8px",
+          "states": {
+            "hover": {
+              "color": "var(--gradient-primary)",
+              "background": "rgba(255, 255, 255, 0.1)"
+            }
+          }
+        }
+      },
+      "icons": {
+        "comment": "Icons are pixel art. The style is established by the 'Vintage Mac Wallpaper Sequoia.png' reference.",
+        "fill": "context-dependent",
+        "background": "none",
+        "container": "none",
+        "size": "24px",
+        "notes": {
+          "critical": "DO NOT use a single solid color for all icons. Icons should be multicolored and can use any of the defined gradients.",
+          "guideline": "The color of an icon should thematically match its context. For example, a 'delete' icon might use the secondary (Orchid) palette, while a 'new feature' icon might use the tertiary (Evergreen) palette."
+        }
+      },
+      "lists": {
+        "comment": "For bulleted or action item lists.",
+        "ul": {
+          "listStyle": "none",
+          "paddingLeft": "0"
+        },
+        "li": {
+          "color": "var(--text-default)",
+          "fontSize": "16px",
+          "padding": "8px 0",
+          "before": {
+            "content": "'+ '",
+            "color": "var(--text-muted)"
+          }
+        }
+      },
+      "dividers": {
+        "comment": "Pixelated horizontal rule for separation.",
+        "height": "2px",
+        "background": "var(--divider)",
+        "border": "none",
+        "imageRendering": "pixelated",
+        "notes": "This can be implemented as an <hr> tag or a border on a container element."
+      }
+    },
+    "animation": {
+      "comment": "Suggestions for modern animations with Framer Motion, per user request.",
+      "cardLoad": {
+        "library": "framer-motion",
+        "trigger": "on page load, staggered",
+        "effect": "Animate cards in with initial={{ opacity: 0, y: 20 }} and animate={{ opacity: 1, y: 0 }} with a short delay between each card."
+      },
+      "buttonHover": {
+        "library": "framer-motion",
+        "trigger": "on hover",
+        "effect": "Use whileHover={{ scale: 1.05 }} for primary buttons. For text links, a subtle background color fade-in."
+      },
+      "textRender": {
+        "library": "framer-motion",
+        "trigger": "on page load",
+        "effect": "For headings, consider a character-by-character stagger animation to simulate a 'typing' effect."
+      }
+    }
+  }
+}
