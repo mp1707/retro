@@ -108,71 +108,7 @@ export default function Home() {
   };
 
   return (
-    <div className="w-full min-h-[calc(100vh-100px)] flex flex-col items-center p-8">
-      {/* Navigation */}
-      <motion.nav 
-        className="w-full max-w-6xl mb-8 flex justify-between items-center"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ type: "spring", stiffness: 400, damping: 30 }}
-      >
-        <div className="flex space-x-8">
-          <a 
-            href="#" 
-            className="text-[#A0A0A0] hover:text-[#EAEAEA] transition-colors"
-            style={{ 
-              fontFamily: "'Press Start 2P', 'VT323', monospace",
-              fontSize: "18px",
-              textDecoration: "none"
-            }}
-          >
-            Home
-          </a>
-          <a 
-            href="#" 
-            className="text-[#A0A0A0] hover:text-[#EAEAEA] transition-colors"
-            style={{ 
-              fontFamily: "'Press Start 2P', 'VT323', monospace",
-              fontSize: "18px",
-              textDecoration: "none"
-            }}
-          >
-            Dashboard
-          </a>
-          <a 
-            href="#" 
-            className="text-[#A0A0A0] hover:text-[#EAEAEA] transition-colors"
-            style={{ 
-              fontFamily: "'Press Start 2P', 'VT323', monospace",
-              fontSize: "18px",
-              textDecoration: "none"
-            }}
-          >
-            Settings
-          </a>
-        </div>
-        <a 
-          href="#" 
-          className="text-[#A0A0A0] hover:text-[#EAEAEA] transition-colors"
-          style={{ 
-            fontFamily: "'Press Start 2P', 'VT323', monospace",
-            fontSize: "18px",
-            textDecoration: "none"
-          }}
-        >
-          Log out
-        </a>
-      </motion.nav>
-
-      {/* Divider */}
-      <motion.hr 
-        className="w-full max-w-6xl h-0.5 bg-[#666666] border-none mb-8"
-        style={{ imageRendering: "pixelated" }}
-        initial={{ scaleX: 0 }}
-        animate={{ scaleX: 1 }}
-        transition={{ delay: 0.2, duration: 0.8 }}
-      />
-
+    <div className="w-full min-h-[calc(100vh-140px)] flex flex-col items-center p-8">
       {/* Main Title */}
       <motion.h1
         className="text-5xl font-normal uppercase mb-12 text-transparent bg-clip-text"
@@ -185,7 +121,7 @@ export default function Home() {
         }}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4, type: "spring", stiffness: 400, damping: 30 }}
+        transition={{ delay: 0.2, type: "spring", stiffness: 400, damping: 30 }}
       >
         RETROSPECTIVE
       </motion.h1>
@@ -225,7 +161,7 @@ export default function Home() {
         className="w-full max-w-6xl"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.0, type: "spring", stiffness: 400, damping: 30 }}
+        transition={{ delay: 0.8, type: "spring", stiffness: 400, damping: 30 }}
       >
         <div 
           className="p-4 border-2 border-dashed border-[#666666] text-center cursor-pointer hover:border-[#A0A0A0] transition-colors"
@@ -248,7 +184,7 @@ export default function Home() {
         className="w-full max-w-6xl mt-8"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.2, type: "spring", stiffness: 400, damping: 30 }}
+        transition={{ delay: 1.0, type: "spring", stiffness: 400, damping: 30 }}
       >
         <ul 
           className="space-y-2"
