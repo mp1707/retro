@@ -38,22 +38,26 @@
         "h1": {
           "comment": "For main page titles, e.g., 'RETROSPECTIVE'.",
           "fontFamily": "inherit",
-          "fontSize": "32px",
+          "fontSize": "48px",
           "fontWeight": "400",
           "textTransform": "uppercase",
           "color": "transparent",
           "background": "var(--gradient-primary)",
           "backgroundClip": "text",
-          "notes": "The gradient is applied to the text fill, not the background of a container."
+          "letterSpacing": "0.1em",
+          "pixelated": true,
+          "notes": "Large pixelated gradient text with character spacing. Should look like retro game titles."
         },
         "h2": {
           "comment": "For card titles, e.g., 'WHAT WENT WELL'.",
           "fontFamily": "inherit",
-          "fontSize": "20px",
+          "fontSize": "24px",
           "fontWeight": "400",
           "textTransform": "uppercase",
           "color": "transparent",
-          "notes": "The text fill should be a gradient. The specific gradient is determined by the parent card's context (e.g., primary, secondary, tertiary)."
+          "letterSpacing": "0.05em",
+          "pixelated": true,
+          "notes": "Card title text with gradient fill matching the card's border gradient. Should be vibrant and pixel-perfect."
         },
         "p": {
           "comment": "For body content inside cards or general text.",
