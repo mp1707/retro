@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { ThemeToggle } from "./ThemeToggle";
 
 export function Header() {
   const [currentTime, setCurrentTime] = useState<string>("");
@@ -27,13 +28,7 @@ export function Header() {
     <header className="w-full">
       {/* Main Header */}
       <div className="flex justify-between items-center p-6">
-        <h1
-          className="text-3xl font-normal uppercase text-transparent bg-gradient-to-r from-[#FFD166] via-[#F79F79] to-[#F786A3] bg-clip-text"
-          style={{
-            fontFamily: "'Press Start 2P', 'VT323', monospace",
-            imageRendering: "pixelated",
-          }}
-        >
+        <h1 className="text-gradient-primary text-3xl pixelated">
           retro
         </h1>
         {/* Navigation */}
@@ -43,72 +38,30 @@ export function Header() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ type: "spring", stiffness: 400, damping: 30 }}
         >
-          <div className="flex space-x-8">
-            <a
-              href="#"
-              className="text-[#A0A0A0] hover:text-[#EAEAEA] transition-colors"
-              style={{
-                fontFamily: "'Press Start 2P', 'VT323', monospace",
-                fontSize: "18px",
-                textDecoration: "none",
-                imageRendering: "pixelated",
-              }}
-            >
+          <div className="flex items-center space-x-8">
+            <a href="#" className="text-lg text-base-content/70 hover:text-base-content hover:underline transition-colors pixelated">
               Home
             </a>
-            <a
-              href="#"
-              className="text-[#A0A0A0] hover:text-[#EAEAEA] transition-colors"
-              style={{
-                fontFamily: "'Press Start 2P', 'VT323', monospace",
-                fontSize: "18px",
-                textDecoration: "none",
-                imageRendering: "pixelated",
-              }}
-            >
+            <a href="#" className="text-lg text-base-content/70 hover:text-base-content hover:underline transition-colors pixelated">
               Dashboard
             </a>
-            <a
-              href="#"
-              className="text-[#A0A0A0] hover:text-[#EAEAEA] transition-colors"
-              style={{
-                fontFamily: "'Press Start 2P', 'VT323', monospace",
-                fontSize: "18px",
-                textDecoration: "none",
-                imageRendering: "pixelated",
-              }}
-            >
+            <a href="#" className="text-lg text-base-content/70 hover:text-base-content hover:underline transition-colors pixelated">
               Settings
             </a>
-            <a
-              href="#"
-              className="text-[#A0A0A0] hover:text-[#EAEAEA] transition-colors"
-              style={{
-                fontFamily: "'Press Start 2P', 'VT323', monospace",
-                fontSize: "18px",
-                textDecoration: "none",
-                imageRendering: "pixelated",
-              }}
-            >
+            <a href="#" className="text-lg text-base-content/70 hover:text-base-content hover:underline transition-colors pixelated">
               Log out
             </a>
-            <time
-              className="text-lg text-[#A0A0A0]"
-              style={{
-                fontFamily: "'Press Start 2P', 'VT323', monospace",
-                imageRendering: "pixelated",
-              }}
-            >
+            <time className="text-lg text-base-content/70 pixelated">
               {currentTime}
             </time>
+            <ThemeToggle />
           </div>
         </motion.nav>
       </div>
 
       {/* Animated Border */}
       <motion.hr
-        className="h-0.5 bg-[#666666] border-none"
-        style={{ imageRendering: "pixelated" }}
+        className="h-0.5 bg-base-300 border-none pixelated"
         initial={{ scaleX: 0 }}
         animate={{ scaleX: 1 }}
         transition={{ delay: 0.2, duration: 0.8 }}

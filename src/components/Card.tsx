@@ -5,42 +5,42 @@ interface CardProps {
 }
 
 export function Card({ title, text, variant }: CardProps) {
-  const gradientMap = {
-    primary: "linear-gradient(90deg, #FFD166 0%, #F79F79 50%, #F786A3 100%)",
-    secondary: "linear-gradient(90deg, #F79F79 0%, #D497E8 50%, #A29BFE 100%)",
-    tertiary: "linear-gradient(90deg, #97CC04 0%, #5DDAA4 50%, #46B2E8 100%)"
+  const getCardClasses = () => {
+    const baseClasses = "bg-transparent p-6 pixelated min-h-48";
+    
+    switch (variant) {
+      case "primary":
+        return `${baseClasses} border-gradient-primary`;
+      case "secondary":
+        return `${baseClasses} border-gradient-secondary`;
+      case "tertiary":
+        return `${baseClasses} border-gradient-tertiary`;
+      default:
+        return baseClasses;
+    }
+  };
+
+  const getTitleClasses = () => {
+    const baseClasses = "mb-4 pixelated";
+    
+    switch (variant) {
+      case "primary":
+        return `${baseClasses} text-gradient-primary`;
+      case "secondary":
+        return `${baseClasses} text-gradient-secondary`;
+      case "tertiary":
+        return `${baseClasses} text-gradient-tertiary`;
+      default:
+        return baseClasses;
+    }
   };
 
   return (
-    <div 
-      className="p-6 min-h-48"
-      style={{
-        background: "transparent",
-        border: "3px solid",
-        borderImageSource: gradientMap[variant],
-        borderImageSlice: 1,
-        imageRendering: "pixelated",
-        fontFamily: "'Press Start 2P', 'VT323', monospace"
-      }}
-    >
-      <h2 
-        className="text-2xl font-normal uppercase mb-4 text-transparent bg-clip-text"
-        style={{
-          background: gradientMap[variant],
-          backgroundClip: "text",
-          letterSpacing: "0.05em",
-          imageRendering: "pixelated"
-        }}
-      >
+    <div className={getCardClasses()}>
+      <h2 className={getTitleClasses()}>
         {title}
       </h2>
-      <p 
-        className="text-[#EAEAEA] text-base leading-relaxed"
-        style={{
-          fontFamily: "'Press Start 2P', 'VT323', monospace",
-          imageRendering: "pixelated"
-        }}
-      >
+      <p className="text-base-content leading-relaxed pixelated">
         {text}
       </p>
     </div>

@@ -1,26 +1,201 @@
 @import "tailwindcss";
+@plugin "daisyui";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@plugin "daisyui/theme" {
+  name: "retrodark";
+  default: true;
+  prefersdark: true;
+  color-scheme: dark;
+
+  /* Base colors - dark theme */
+  --color-base-100: oklch(10.6% 0.004 240); /* #1A1A1A */
+  --color-base-200: oklch(16.6% 0.004 240); /* #2A2A2A */
+  --color-base-300: oklch(40% 0.002 240);   /* #666666 */
+  --color-base-content: oklch(92.4% 0.004 240); /* #EAEAEA */
+
+  /* Primary gradient colors (Sunset) */
+  --color-primary: oklch(82.5% 0.15 80);     /* #FFD166 */
+  --color-primary-content: oklch(10.6% 0.004 240); /* #1A1A1A */
+  
+  /* Secondary gradient colors (Orchid) */
+  --color-secondary: oklch(72.8% 0.13 310);  /* #D497E8 */
+  --color-secondary-content: oklch(10.6% 0.004 240); /* #1A1A1A */
+  
+  /* Accent gradient colors (Evergreen) */
+  --color-accent: oklch(78.8% 0.13 160);     /* #5DDAA4 */
+  --color-accent-content: oklch(10.6% 0.004 240); /* #1A1A1A */
+  
+  /* Neutral colors */
+  --color-neutral: oklch(40% 0.002 240);     /* #666666 */
+  --color-neutral-content: oklch(92.4% 0.004 240); /* #EAEAEA */
+  
+  /* Status colors */
+  --color-info: oklch(70% 0.2 220);
+  --color-info-content: oklch(98% 0.01 220);
+  --color-success: oklch(65% 0.25 140);
+  --color-success-content: oklch(98% 0.01 140);
+  --color-warning: oklch(80% 0.25 80);
+  --color-warning-content: oklch(20% 0.05 80);
+  --color-error: oklch(65% 0.3 30);
+  --color-error-content: oklch(98% 0.01 30);
+
+  /* Sharp pixel-perfect borders - no radius */
+  --radius-selector: 0;
+  --radius-field: 0;
+  --radius-box: 0;
+
+  /* Base sizes */
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+
+  /* Sharp borders */
+  --border: 3px;
+
+  /* No effects - maintains pixelated aesthetic */
+  --depth: 0;
+  --noise: 0;
+
+  /* Custom font family */
+  font-family: 'Pixel Operator', 'Press Start 2P', 'Silkscreen', 'VT323', monospace;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@plugin "daisyui/theme" {
+  name: "retrolight";
+  default: false;
+  prefersdark: false;
+  color-scheme: light;
+
+  /* Base colors - light theme */
+  --color-base-100: oklch(97.2% 0.002 240); /* #F8F9FA */
+  --color-base-200: oklch(100% 0 0);        /* #FFFFFF */
+  --color-base-300: oklch(88.6% 0.002 240); /* #E2E8F0 */
+  --color-base-content: oklch(23.5% 0.01 240); /* #2D3748 */
+
+  /* Primary gradient colors (Sunset) - same vibrant colors */
+  --color-primary: oklch(82.5% 0.15 80);     /* #FFD166 */
+  --color-primary-content: oklch(10.6% 0.004 240); /* #1A1A1A */
+  
+  /* Secondary gradient colors (Orchid) */
+  --color-secondary: oklch(72.8% 0.13 310);  /* #D497E8 */
+  --color-secondary-content: oklch(10.6% 0.004 240); /* #1A1A1A */
+  
+  /* Accent gradient colors (Evergreen) */
+  --color-accent: oklch(78.8% 0.13 160);     /* #5DDAA4 */
+  --color-accent-content: oklch(10.6% 0.004 240); /* #1A1A1A */
+  
+  /* Neutral colors */
+  --color-neutral: oklch(88.6% 0.002 240);   /* #E2E8F0 */
+  --color-neutral-content: oklch(23.5% 0.01 240); /* #2D3748 */
+  
+  /* Status colors */
+  --color-info: oklch(70% 0.2 220);
+  --color-info-content: oklch(98% 0.01 220);
+  --color-success: oklch(65% 0.25 140);
+  --color-success-content: oklch(98% 0.01 140);
+  --color-warning: oklch(80% 0.25 80);
+  --color-warning-content: oklch(20% 0.05 80);
+  --color-error: oklch(65% 0.3 30);
+  --color-error-content: oklch(98% 0.01 30);
+
+  /* Sharp pixel-perfect borders - no radius */
+  --radius-selector: 0;
+  --radius-field: 0;
+  --radius-box: 0;
+
+  /* Base sizes */
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+
+  /* Sharp borders */
+  --border: 3px;
+
+  /* No effects - maintains pixelated aesthetic */
+  --depth: 0;
+  --noise: 0;
+
+  /* Custom font family */
+  font-family: 'Pixel Operator', 'Press Start 2P', 'Silkscreen', 'VT323', monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* Base body styling using DaisyUI semantic colors */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  @apply bg-base-100 text-base-content min-h-screen;
+  font-family: 'Pixel Operator', 'Press Start 2P', 'Silkscreen', 'VT323', monospace;
+  image-rendering: pixelated;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Typography using design system specifications */
+h1 {
+  @apply text-5xl font-normal uppercase tracking-widest;
+  font-family: inherit;
+  image-rendering: pixelated;
+}
+
+h2 {
+  @apply text-2xl font-normal uppercase tracking-wider;
+  font-family: inherit;
+  image-rendering: pixelated;
+}
+
+p {
+  @apply text-base leading-6;
+  font-family: inherit;
+  image-rendering: pixelated;
+}
+
+a {
+  @apply text-lg no-underline transition-colors;
+  font-family: inherit;
+  image-rendering: pixelated;
+}
+
+a:hover {
+  @apply underline;
+}
+
+/* Custom gradient utilities for the design system */
+.text-gradient-primary {
+  background: linear-gradient(90deg, #FFD166 0%, #F79F79 50%, #F786A3 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.text-gradient-secondary {
+  background: linear-gradient(90deg, #F79F79 0%, #D497E8 50%, #A29BFE 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.text-gradient-tertiary {
+  background: linear-gradient(90deg, #97CC04 0%, #5DDAA4 50%, #46B2E8 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* Custom border gradient utilities */
+.border-gradient-primary {
+  border: 3px solid transparent;
+  border-image: linear-gradient(90deg, #FFD166 0%, #F79F79 50%, #F786A3 100%) 1;
+  border-image-slice: 1;
+}
+
+.border-gradient-secondary {
+  border: 3px solid transparent;
+  border-image: linear-gradient(90deg, #F79F79 0%, #D497E8 50%, #A29BFE 100%) 1;
+  border-image-slice: 1;
+}
+
+.border-gradient-tertiary {
+  border: 3px solid transparent;
+  border-image: linear-gradient(90deg, #97CC04 0%, #5DDAA4 50%, #46B2E8 100%) 1;
+  border-image-slice: 1;
+}
+
+/* Pixelated rendering utility */
+.pixelated {
+  image-rendering: pixelated;
 }

@@ -8,18 +8,6 @@ export default function Home() {
   const [userResponse, setUserResponse] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUserResponse(event.target.value);
-  };
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (!userResponse.trim()) return;
-
-    setIsSubmitted(true);
-    console.log("User response:", userResponse);
-  };
-
   const handleReset = () => {
     setUserResponse("");
     setIsSubmitted(false);
@@ -28,17 +16,13 @@ export default function Home() {
   if (isSubmitted) {
     return (
       <motion.div 
-        className="w-full h-full flex flex-col justify-center items-center space-y-6 p-8"
+        className="w-full max-w-6xl mx-auto h-full flex flex-col justify-center items-center space-y-6 p-8"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ type: "spring", stiffness: 400, damping: 30 }}
       >
         <motion.h1
-          className="text-3xl text-transparent bg-gradient-to-r from-[#FFD166] via-[#F79F79] to-[#F786A3] bg-clip-text uppercase font-normal"
-          style={{
-            fontFamily: "'Press Start 2P', 'VT323', monospace",
-            imageRendering: "pixelated",
-          }}
+          className="text-gradient-primary text-5xl font-normal uppercase tracking-widest pixelated"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2, duration: 0.8 }}
@@ -46,27 +30,16 @@ export default function Home() {
           Thank you for sharing!
         </motion.h1>
         <motion.p
-          className="text-[#A0A0A0] text-lg text-center max-w-2xl"
-          style={{
-            fontFamily: "'Press Start 2P', 'VT323', monospace",
-            lineHeight: 1.5,
-            imageRendering: "pixelated",
-          }}
+          className="text-base-content/70 text-center max-w-2xl pixelated"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4, duration: 0.8 }}
         >
-          Your response: "{userResponse}"
+          Your response: &ldquo;{userResponse}&rdquo;
         </motion.p>
         <motion.button
           onClick={handleReset}
-          className="px-6 py-3 border-none cursor-pointer text-[#1A1A1A] font-bold"
-          style={{
-            background: "var(--gradient-primary)",
-            fontFamily: "'Press Start 2P', 'VT323', monospace",
-            fontSize: "16px",
-            imageRendering: "pixelated",
-          }}
+          className="bg-gradient-to-r from-sunset-start via-sunset-mid to-sunset-end text-primary-content font-bold px-6 py-3 transition-transform pixelated hover:scale-105"
           whileHover={{ 
             scale: 1.05,
             boxShadow: "0 0 15px rgba(255, 209, 102, 0.5)"
@@ -100,7 +73,7 @@ export default function Home() {
       opacity: 1, 
       y: 0,
       transition: { 
-        type: "spring", 
+        type: "spring" as const, 
         stiffness: 400, 
         damping: 30 
       }
@@ -108,16 +81,15 @@ export default function Home() {
   };
 
   return (
-    <div className="w-full min-h-[calc(100vh-140px)] flex flex-col items-center p-8">
+    <div className="w-full max-w-6xl mx-auto min-h-[calc(100vh-140px)] flex flex-col items-center p-8">
       {/* Main Title */}
       <motion.h1
-        className="text-5xl font-normal uppercase mb-12 text-transparent bg-clip-text"
+        className="text-5xl font-normal uppercase tracking-widest mb-12 pixelated"
         style={{
-          background: "linear-gradient(90deg, #FFD166 0%, #F79F79 25%, #D497E8 50%, #A29BFE 75%, #46B2E8 100%)",
+          background: "linear-gradient(to right, #FFD166, #D497E8, #5DDAA4)",
           backgroundClip: "text",
-          fontFamily: "'Press Start 2P', 'VT323', monospace",
-          letterSpacing: "0.1em",
-          imageRendering: "pixelated"
+          WebkitBackgroundClip: "text",
+          color: "transparent"
         }}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -128,7 +100,7 @@ export default function Home() {
 
       {/* Cards Grid */}
       <motion.div 
-        className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl w-full mb-8"
+        className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl mx-auto mb-8"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
@@ -158,52 +130,36 @@ export default function Home() {
 
       {/* Add Note Button */}
       <motion.div 
-        className="w-full max-w-6xl"
+        className="w-full max-w-6xl mx-auto"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.8, type: "spring", stiffness: 400, damping: 30 }}
       >
-        <div 
-          className="p-4 border-2 border-dashed border-[#666666] text-center cursor-pointer hover:border-[#A0A0A0] transition-colors"
-          style={{ imageRendering: "pixelated" }}
+        <button 
+          className="bg-transparent text-base-content hover:text-primary hover:bg-base-content/10 w-full p-4 border-2 border-dashed border-base-300 hover:border-base-content transition-colors text-center pixelated"
         >
-          <span 
-            className="text-[#A0A0A0] text-lg"
-            style={{ 
-              fontFamily: "'Press Start 2P', 'VT323', monospace",
-              imageRendering: "pixelated"
-            }}
-          >
-            + Add a note
-          </span>
-        </div>
+          + Add a note
+        </button>
       </motion.div>
 
       {/* Action Items */}
       <motion.div 
-        className="w-full max-w-6xl mt-8"
+        className="w-full max-w-6xl mx-auto mt-8"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.0, type: "spring", stiffness: 400, damping: 30 }}
       >
-        <ul 
-          className="space-y-2"
-          style={{ 
-            fontFamily: "'Press Start 2P', 'VT323', monospace",
-            listStyle: "none",
-            paddingLeft: 0
-          }}
-        >
-          <li className="text-[#EAEAEA] text-base">
-            <span className="text-[#A0A0A0]">+ </span>
+        <ul className="list-none pl-0 space-y-4 pixelated">
+          <li className="text-base-content py-2 pixelated">
+            <span className="text-base-content/70">+ </span>
             Review project outcomes
           </li>
-          <li className="text-[#EAEAEA] text-base">
-            <span className="text-[#A0A0A0]">+ </span>
+          <li className="text-base-content py-2 pixelated">
+            <span className="text-base-content/70">+ </span>
             Discuss what to improve
           </li>
-          <li className="text-[#EAEAEA] text-base">
-            <span className="text-[#A0A0A0]">+ </span>
+          <li className="text-base-content py-2 pixelated">
+            <span className="text-base-content/70">+ </span>
             Assign action items
           </li>
         </ul>
