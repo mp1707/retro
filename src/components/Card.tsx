@@ -6,22 +6,30 @@ interface CardProps {
 
 export function Card({ title, text, variant }: CardProps) {
   const getCardClasses = () => {
-    const baseClasses = "bg-transparent p-6 pixelated min-h-48";
+    // Responsive padding: 16px mobile -> 20px tablet -> 24px desktop
+    // Responsive border: 2px mobile -> 3px desktop  
+    // Responsive min-height: smaller on mobile for better layout
+    const baseClasses = "bg-transparent p-4 sm:p-5 md:p-6 pixelated min-h-[200px] sm:min-h-[220px] md:min-h-[240px] flex flex-col";
+    
+    // Responsive border classes
+    const borderClasses = "border-2 md:border-[3px] border-solid";
     
     switch (variant) {
       case "primary":
-        return `${baseClasses} border-gradient-primary`;
+        return `${baseClasses} ${borderClasses} border-gradient-primary`;
       case "secondary":
-        return `${baseClasses} border-gradient-secondary`;
+        return `${baseClasses} ${borderClasses} border-gradient-secondary`;
       case "tertiary":
-        return `${baseClasses} border-gradient-tertiary`;
+        return `${baseClasses} ${borderClasses} border-gradient-tertiary`;
       default:
-        return baseClasses;
+        return `${baseClasses} ${borderClasses}`;
     }
   };
 
   const getTitleClasses = () => {
-    const baseClasses = "mb-4 pixelated";
+    // Responsive title sizing: 18px mobile -> 20px tablet -> 24px desktop
+    // Responsive spacing and letter spacing
+    const baseClasses = "mb-3 sm:mb-4 pixelated text-sm sm:text-base md:text-lg lg:text-xl font-normal uppercase tracking-wider flex-shrink-0";
     
     switch (variant) {
       case "primary":
@@ -40,7 +48,7 @@ export function Card({ title, text, variant }: CardProps) {
       <h2 className={getTitleClasses()}>
         {title}
       </h2>
-      <p className="text-base-content leading-relaxed pixelated">
+      <p className="text-base-content leading-relaxed pixelated text-sm sm:text-base flex-grow">
         {text}
       </p>
     </div>

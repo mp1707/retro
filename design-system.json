@@ -1,20 +1,55 @@
 {
   "designSystemProfile": {
     "name": "Retrograde Pixel",
-    "version": "1.1.0",
-    "description": "A design system blending 8-bit nostalgia with modern, vibrant gradients. It features a dark mode theme, pixel-perfect typography, and gradient-based accents. The core aesthetic relies on sharp edges, pixelated borders, and colorful text/iconography against a dark background.",
+    "version": "1.2.0",
+    "description": "A responsive design system blending 8-bit nostalgia with modern, vibrant gradients. It features a dark mode theme, pixel-perfect typography, and gradient-based accents. The core aesthetic relies on sharp edges, pixelated borders, and colorful text/iconography against a dark background. Now fully responsive across all device sizes.",
     "global": {
       "backgroundColor": "#1A1A1A",
       "fontFamily": "'Pixel Operator', 'Press Start 2P', 'Silkscreen', 'VT323', monospace",
       "globalTextColor": "#EAEAEA",
-      "notes": "No shadows, blurs, or border-radius should be used anywhere in this design system to maintain the sharp, pixelated aesthetic. All elements should appear crisp."
+      "notes": "No shadows, blurs, or border-radius should be used anywhere in this design system to maintain the sharp, pixelated aesthetic. All elements should appear crisp and work elegantly across all screen sizes."
+    },
+    "responsive": {
+      "philosophy": "Mobile-first design with pixel-perfect scaling. All components must work elegantly on every screen size from 320px to 1920px+.",
+      "breakpoints": {
+        "mobile": {
+          "width": "< 640px",
+          "notes": "Primary design target. Touch-friendly interactions, simplified navigation, single-column layouts."
+        },
+        "tablet": {
+          "width": "640px - 768px",
+          "notes": "Two-column layouts, larger touch targets, optimized for portrait and landscape."
+        },
+        "desktop": {
+          "width": "768px+",
+          "notes": "Multi-column layouts, hover states, full navigation."
+        },
+        "large": {
+          "width": "1024px+",
+          "notes": "Maximum content width constraints, enhanced spacing."
+        }
+      },
+      "designPrinciples": {
+        "touchTargets": {
+          "minimum": "44px",
+          "description": "All interactive elements must be at least 44px in height/width for comfortable touch interaction."
+        },
+        "contentHierarchy": {
+          "rule": "Most important content visible first",
+          "description": "Critical information should be accessible without scrolling on mobile devices."
+        },
+        "pixelAesthetic": {
+          "preservation": "Maintain across all devices",
+          "description": "The retro pixel aesthetic must remain consistent across all screen sizes while ensuring usability."
+        }
+      }
     },
     "palettes": {
       "gradients": {
         "primary": {
           "name": "Sunset",
           "css": "linear-gradient(90deg, #FFD166 0%, #F79F79 50%, #F786A3 100%)",
-          "colors": ["#FFD166", "#F79F79", "#F786A3"]
+          "colors": ["#FFD166", "#F79F79", "##F786A3"]
         },
         "secondary": {
           "name": "Orchid",
@@ -35,42 +70,98 @@
     },
     "elementStyling": {
       "typography": {
+        "responsive": {
+          "philosophy": "Fluid typography that scales smoothly across all devices while maintaining readability.",
+          "implementation": "Use Tailwind responsive prefixes (sm:, md:, lg:) for different screen sizes."
+        },
         "h1": {
-          "comment": "For main page titles, e.g., 'RETROSPECTIVE'.",
+          "comment": "For main page titles, e.g., 'RETROSPECTIVE'. Responsive scaling across devices.",
           "fontFamily": "inherit",
-          "fontSize": "48px",
+          "responsive": {
+            "mobile": {
+              "fontSize": "24px",
+              "lineHeight": "1.2",
+              "letterSpacing": "0.08em"
+            },
+            "tablet": {
+              "fontSize": "36px",
+              "lineHeight": "1.15",
+              "letterSpacing": "0.09em"
+            },
+            "desktop": {
+              "fontSize": "48px",
+              "lineHeight": "1.1",
+              "letterSpacing": "0.1em"
+            }
+          },
           "fontWeight": "400",
           "textTransform": "uppercase",
           "color": "transparent",
           "background": "var(--gradient-primary)",
           "backgroundClip": "text",
-          "letterSpacing": "0.1em",
           "pixelated": true,
-          "notes": "Large pixelated gradient text with character spacing. Should look like retro game titles."
+          "notes": "Scales from 24px on mobile to 48px on desktop. Maintains pixel aesthetic at all sizes."
         },
         "h2": {
-          "comment": "For card titles, e.g., 'WHAT WENT WELL'.",
+          "comment": "For card titles, e.g., 'WHAT WENT WELL'. Responsive for mobile readability.",
           "fontFamily": "inherit",
-          "fontSize": "24px",
+          "responsive": {
+            "mobile": {
+              "fontSize": "18px",
+              "lineHeight": "1.3",
+              "letterSpacing": "0.04em"
+            },
+            "tablet": {
+              "fontSize": "20px",
+              "lineHeight": "1.25",
+              "letterSpacing": "0.045em"
+            },
+            "desktop": {
+              "fontSize": "24px",
+              "lineHeight": "1.2",
+              "letterSpacing": "0.05em"
+            }
+          },
           "fontWeight": "400",
           "textTransform": "uppercase",
           "color": "transparent",
-          "letterSpacing": "0.05em",
           "pixelated": true,
-          "notes": "Card title text with gradient fill matching the card's border gradient. Should be vibrant and pixel-perfect."
+          "notes": "Scales from 18px on mobile to 24px on desktop for optimal card header readability."
         },
         "p": {
-          "comment": "For body content inside cards or general text.",
+          "comment": "For body content inside cards or general text. Optimized for mobile reading.",
           "fontFamily": "inherit",
-          "fontSize": "16px",
+          "responsive": {
+            "mobile": {
+              "fontSize": "14px",
+              "lineHeight": "1.6"
+            },
+            "tablet": {
+              "fontSize": "15px", 
+              "lineHeight": "1.55"
+            },
+            "desktop": {
+              "fontSize": "16px",
+              "lineHeight": "1.5"
+            }
+          },
           "fontWeight": "400",
-          "color": "var(--text-default)",
-          "lineHeight": "1.5"
+          "color": "var(--text-default)"
         },
         "a": {
-          "comment": "For navigation and other interactive links.",
+          "comment": "For navigation and other interactive links. Touch-friendly on mobile.",
           "fontFamily": "inherit",
-          "fontSize": "18px",
+          "responsive": {
+            "mobile": {
+              "fontSize": "16px",
+              "padding": "12px 8px",
+              "minHeight": "44px"
+            },
+            "desktop": {
+              "fontSize": "18px",
+              "padding": "8px"
+            }
+          },
           "color": "var(--text-muted)",
           "textDecoration": "none",
           "states": {
@@ -85,18 +176,50 @@
         }
       },
       "cards": {
-        "comment": "The core content container. The visual container is defined by its border, not a background fill.",
+        "comment": "The core content container. Must work elegantly on all screen sizes.",
+        "responsive": {
+          "mobile": {
+            "padding": "16px",
+            "borderWidth": "2px",
+            "marginBottom": "16px"
+          },
+          "tablet": {
+            "padding": "20px",
+            "borderWidth": "3px",
+            "marginBottom": "20px"
+          },
+          "desktop": {
+            "padding": "24px",
+            "borderWidth": "3px",
+            "marginBottom": "24px"
+          }
+        },
         "container": {
           "background": "transparent",
-          "padding": "24px",
           "borderStyle": "solid",
-          "borderWidth": "3px",
           "imageRendering": "pixelated",
           "borderImageSlice": "1",
           "borderRadius": "0",
           "notes": {
-            "critical": "DO NOT apply background color or background gradients to the card itself. The card's content area is transparent, showing the global page background.",
-            "implementation": "The gradient is applied ONLY to the border. Use the 'border-image-source' CSS property with the appropriate gradient."
+            "critical": "Cards must remain readable and usable on mobile devices. Reduce padding and border thickness on small screens.",
+            "implementation": "Use responsive utilities for padding and borders. Maintain gradient borders across all sizes."
+          }
+        },
+        "layout": {
+          "mobile": {
+            "columns": 1,
+            "gap": "16px",
+            "notes": "Single column layout on mobile for optimal readability."
+          },
+          "tablet": {
+            "columns": 2,
+            "gap": "20px", 
+            "notes": "Two columns on tablet, with the third card below."
+          },
+          "desktop": {
+            "columns": 3,
+            "gap": "32px",
+            "notes": "Full three-column layout on desktop."
           }
         },
         "variants": {
@@ -118,17 +241,30 @@
         }
       },
       "buttons": {
-        "comment": "Interactive elements for actions. Hover states should provide clear feedback.",
+        "comment": "Interactive elements for actions. Must be touch-friendly on mobile.",
+        "responsive": {
+          "touchTargets": {
+            "minimum": "44px",
+            "description": "All buttons must meet minimum touch target size on mobile devices."
+          },
+          "mobile": {
+            "fontSize": "14px",
+            "padding": "12px 20px",
+            "minHeight": "44px"
+          },
+          "desktop": {
+            "fontSize": "16px",
+            "padding": "12px 24px"
+          }
+        },
         "baseStyle": {
           "fontFamily": "inherit",
-          "fontSize": "16px",
-          "padding": "12px 24px",
           "border": "none",
           "borderRadius": "0",
           "cursor": "pointer"
         },
         "primary": {
-          "comment": "PROPOSED STYLE for primary actions, e.g., 'Submit', 'Create'.",
+          "comment": "For primary actions, e.g., 'Submit', 'Create'. Touch-optimized.",
           "background": "var(--gradient-primary)",
           "color": "#1A1A1A",
           "fontWeight": "bold",
@@ -136,14 +272,25 @@
             "hover": {
               "transform": "scale(1.05)",
               "boxShadow": "0 0 15px rgba(255, 209, 102, 0.5)"
+            },
+            "active": {
+              "transform": "scale(0.98)"
             }
           }
         },
         "textLink": {
-          "comment": "For secondary actions, like '+ Add a note'.",
+          "comment": "For secondary actions, like '+ Add a note'. Mobile-optimized.",
           "background": "transparent",
           "color": "var(--text-default)",
-          "padding": "8px",
+          "responsive": {
+            "mobile": {
+              "padding": "16px",
+              "minHeight": "44px"
+            },
+            "desktop": {
+              "padding": "8px"
+            }
+          },
           "states": {
             "hover": {
               "color": "var(--gradient-primary)",
@@ -152,27 +299,78 @@
           }
         }
       },
+      "navigation": {
+        "comment": "Navigation patterns for different screen sizes.",
+        "mobile": {
+          "pattern": "hamburger",
+          "description": "Use hamburger menu for mobile navigation. Hide secondary nav items.",
+          "iconSize": "24px",
+          "touchTarget": "44px"
+        },
+        "tablet": {
+          "pattern": "horizontal",
+          "description": "Horizontal navigation with adequate spacing for touch."
+        },
+        "desktop": {
+          "pattern": "full",
+          "description": "Full navigation with all items visible and hover states."
+        }
+      },
+      "spacing": {
+        "comment": "Responsive spacing system for consistent layouts.",
+        "mobile": {
+          "container": "16px",
+          "section": "24px",
+          "element": "12px"
+        },
+        "tablet": {
+          "container": "24px",
+          "section": "32px",
+          "element": "16px"
+        },
+        "desktop": {
+          "container": "32px",
+          "section": "48px",
+          "element": "24px"
+        }
+      },
       "icons": {
-        "comment": "Icons are pixel art. The style is established by the 'Vintage Mac Wallpaper Sequoia.png' reference.",
+        "comment": "Icons are pixel art. Size must be appropriate for touch interaction.",
         "fill": "context-dependent",
         "background": "none",
         "container": "none",
-        "size": "24px",
+        "responsive": {
+          "mobile": {
+            "size": "20px",
+            "touchTarget": "44px"
+          },
+          "desktop": {
+            "size": "24px"
+          }
+        },
         "notes": {
-          "critical": "DO NOT use a single solid color for all icons. Icons should be multicolored and can use any of the defined gradients.",
-          "guideline": "The color of an icon should thematically match its context. For example, a 'delete' icon might use the secondary (Orchid) palette, while a 'new feature' icon might use the tertiary (Evergreen) palette."
+          "critical": "Icons should be multicolored and use gradients. Ensure adequate touch targets on mobile.",
+          "guideline": "The color of an icon should thematically match its context. Increase touch target area on mobile devices."
         }
       },
       "lists": {
-        "comment": "For bulleted or action item lists.",
+        "comment": "For bulleted or action item lists. Optimized for mobile readability.",
         "ul": {
           "listStyle": "none",
           "paddingLeft": "0"
         },
         "li": {
           "color": "var(--text-default)",
-          "fontSize": "16px",
-          "padding": "8px 0",
+          "responsive": {
+            "mobile": {
+              "fontSize": "14px",
+              "padding": "12px 0"
+            },
+            "desktop": {
+              "fontSize": "16px",
+              "padding": "8px 0"
+            }
+          },
           "before": {
             "content": "'+ '",
             "color": "var(--text-muted)"
@@ -180,30 +378,51 @@
         }
       },
       "dividers": {
-        "comment": "Pixelated horizontal rule for separation.",
-        "height": "2px",
+        "comment": "Pixelated horizontal rule for separation. Scales for mobile.",
+        "responsive": {
+          "mobile": {
+            "height": "1px"
+          },
+          "desktop": {
+            "height": "2px"
+          }
+        },
         "background": "var(--divider)",
         "border": "none",
-        "imageRendering": "pixelated",
-        "notes": "This can be implemented as an <hr> tag or a border on a container element."
+        "imageRendering": "pixelated"
       }
     },
     "animation": {
-      "comment": "Suggestions for modern animations with Framer Motion, per user request.",
+      "comment": "Responsive animations with performance considerations for mobile.",
+      "performance": {
+        "mobile": "Reduced motion for better performance and battery life.",
+        "implementation": "Respect prefers-reduced-motion media query."
+      },
       "cardLoad": {
         "library": "framer-motion",
         "trigger": "on page load, staggered",
-        "effect": "Animate cards in with initial={{ opacity: 0, y: 20 }} and animate={{ opacity: 1, y: 0 }} with a short delay between each card."
+        "effect": "Animate cards in with initial={{ opacity: 0, y: 20 }} and animate={{ opacity: 1, y: 0 }} with shorter delays on mobile.",
+        "responsive": {
+          "mobile": {
+            "stagger": "0.1s",
+            "duration": "0.3s"
+          },
+          "desktop": {
+            "stagger": "0.2s", 
+            "duration": "0.4s"
+          }
+        }
       },
       "buttonHover": {
         "library": "framer-motion",
-        "trigger": "on hover",
-        "effect": "Use whileHover={{ scale: 1.05 }} for primary buttons. For text links, a subtle background color fade-in."
+        "trigger": "on hover/touch",
+        "effect": "Use whileHover={{ scale: 1.05 }} for primary buttons. On mobile, use whileTap for touch feedback.",
+        "mobile": "whileTap={{ scale: 0.98 }} for touch feedback"
       },
       "textRender": {
         "library": "framer-motion",
         "trigger": "on page load",
-        "effect": "For headings, consider a character-by-character stagger animation to simulate a 'typing' effect."
+        "effect": "Character-by-character stagger for headings. Simplified on mobile for performance."
       }
     }
   }
