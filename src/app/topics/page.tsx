@@ -37,7 +37,7 @@ function TopicGroup({ topic, cards, votes, canVote, onVote, onCreateActionItem }
       className="space-y-4"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ type: "spring", stiffness: 400, damping: 30 }}
+      transition={{ type: "spring" as const, stiffness: 400, damping: 30 }}
     >
       {/* Topic Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 p-4 bg-base-200/30 border border-base-300">
@@ -59,7 +59,7 @@ function TopicGroup({ topic, cards, votes, canVote, onVote, onCreateActionItem }
               className="bg-primary text-primary-content px-2 py-1 text-xs pixelated"
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
-              transition={{ type: "spring", stiffness: 400, damping: 30 }}
+              transition={{ type: "spring" as const, stiffness: 400, damping: 30 }}
             >
               {votes} vote{votes !== 1 ? 's' : ''}
             </motion.span>
@@ -112,7 +112,7 @@ function TopicGroup({ topic, cards, votes, canVote, onVote, onCreateActionItem }
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               whileHover={{ scale: 1.02, y: -2 }}
-              transition={{ type: "spring", stiffness: 400, damping: 30 }}
+              transition={{ type: "spring" as const, stiffness: 400, damping: 30 }}
             >
               <p className="text-base-content leading-relaxed pixelated text-sm">
                 {card.content}
@@ -192,7 +192,7 @@ function ActionItemCard({ actionItem }: ActionItemCardProps) {
   );
 }
 
-export default function TopicsPage(): JSX.Element {
+export default function TopicsPage() {
   const router = useRouter();
   const { 
     retroCards, 
@@ -273,7 +273,7 @@ export default function TopicsPage(): JSX.Element {
       opacity: 1, 
       y: 0,
       transition: { 
-        type: "spring", 
+        type: "spring" as const, 
         stiffness: 400, 
         damping: 30 
       }
