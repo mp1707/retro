@@ -16,10 +16,29 @@ export function FontSizeToggle() {
 
   useEffect(() => {
     setMounted(true);
-    // Get initial font scale from localStorage or data attribute
-    const savedScale = localStorage.getItem("fontScale") as FontScale;
+    
+    // Get initial font scale from data attribute (server-rendered)
     const currentScale = document.documentElement.getAttribute("data-font-scale") as FontScale;
-    const initialScale = savedScale && savedScale in FONT_SCALES ? savedScale : currentScale || "md";
+    const initialScale = currentScale && currentScale in FONT_SCALES ? currentScale : "md";
+    
+    // Check if we should update based on localStorage
+    try {
+      const savedScale = localStorage.getItem("fontScale") as FontScale;
+      const validScales = ["sm", "md"];
+      
+      if (savedScale && validScales.includes(savedScale)) {
+        // Use saved font scale
+        if (savedScale !== initialScale) {
+          setFontScale(savedScale);
+          document.documentElement.setAttribute("data-font-scale", savedScale);
+          return;
+        }
+      }
+    } catch {
+      // localStorage not available, use default
+    }
+    
+    // Use the server-rendered font scale
     setFontScale(initialScale);
   }, []);
 

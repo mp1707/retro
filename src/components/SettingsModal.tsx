@@ -75,8 +75,7 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
             transition={{ 
               type: "spring", 
               stiffness: 400, 
-              damping: 30,
-              duration: window.matchMedia("(max-width: 640px)").matches ? 0.3 : 0.4
+              damping: 30
             }}
           >
             <div

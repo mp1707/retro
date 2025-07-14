@@ -24,7 +24,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-theme="retrodark">
+    <html lang="en" data-theme="retrodark" data-font-scale="md">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -37,21 +37,20 @@ export default function RootLayout({
             __html: `
               (function() {
                 try {
-                  // Initialize theme
-                  const savedTheme = localStorage.getItem("theme");
-                  const systemTheme = window.matchMedia("(prefers-color-scheme: light)").matches ? "retrolight" : "retrodark";
-                  const initialTheme = savedTheme || systemTheme;
-                  if (initialTheme !== "retrodark") {
-                    document.documentElement.setAttribute("data-theme", initialTheme);
+                  // Clean up any invalid localStorage values first
+                  var savedTheme = localStorage.getItem("theme");
+                  var validThemes = ["retrodark", "retrolight"];
+                  if (savedTheme && validThemes.indexOf(savedTheme) === -1) {
+                    localStorage.removeItem("theme");
                   }
                   
-                  // Initialize font scale
-                  const savedFontScale = localStorage.getItem("fontScale") || "md";
-                  const validScales = ["xs", "sm", "md", "lg"];
-                  const initialScale = validScales.includes(savedFontScale) ? savedFontScale : "md";
-                  document.documentElement.setAttribute("data-font-scale", initialScale);
+                  var savedFontScale = localStorage.getItem("fontScale");
+                  var validScales = ["sm", "md"];
+                  if (savedFontScale && validScales.indexOf(savedFontScale) === -1) {
+                    localStorage.removeItem("fontScale");
+                  }
                 } catch (e) {
-                  // Default values already set
+                  // Silent fail if localStorage is not available
                 }
               })();
             `,

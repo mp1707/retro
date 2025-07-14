@@ -9,16 +9,38 @@ export function ThemeToggle() {
 
   useEffect(() => {
     setMounted(true);
-    // Get initial theme from localStorage or system preference
-    const savedTheme = localStorage.getItem("theme") as "retrodark" | "retrolight";
-    if (savedTheme) {
-      setTheme(savedTheme);
-      document.documentElement.setAttribute("data-theme", savedTheme);
-    } else {
-      const systemTheme = window.matchMedia("(prefers-color-scheme: light)").matches ? "retrolight" : "retrodark";
-      setTheme(systemTheme);
-      document.documentElement.setAttribute("data-theme", systemTheme);
+    
+    // Get initial theme from data attribute (server-rendered)
+    const currentTheme = document.documentElement.getAttribute("data-theme") as "retrodark" | "retrolight";
+    const initialTheme = currentTheme || "retrodark";
+    
+    // Check if we should update based on localStorage or system preference
+    try {
+      const savedTheme = localStorage.getItem("theme") as "retrodark" | "retrolight";
+      const validThemes = ["retrodark", "retrolight"];
+      
+      if (savedTheme && validThemes.includes(savedTheme)) {
+        // Use saved theme
+        if (savedTheme !== initialTheme) {
+          setTheme(savedTheme);
+          document.documentElement.setAttribute("data-theme", savedTheme);
+          return;
+        }
+      } else {
+        // Use system preference
+        const systemTheme = window.matchMedia("(prefers-color-scheme: light)").matches ? "retrolight" : "retrodark";
+        if (systemTheme !== initialTheme) {
+          setTheme(systemTheme);
+          document.documentElement.setAttribute("data-theme", systemTheme);
+          return;
+        }
+      }
+    } catch {
+      // localStorage not available, use default
     }
+    
+    // Use the server-rendered theme
+    setTheme(initialTheme);
   }, []);
 
   const toggleTheme = () => {
