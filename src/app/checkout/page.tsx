@@ -5,44 +5,49 @@ import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useRetroStore } from "@/store/retroStore";
 
-export default function CheckoutPage(): JSX.Element {
+export default function CheckoutPage() {
   const router = useRouter();
-  const { 
+  const {
     icebreakerResponse,
-    retroCards, 
-    actionItems, 
+    retroCards,
+    actionItems,
     votes,
     setStep,
-    resetStore 
+    resetStore,
   } = useRetroStore();
 
   useEffect(() => {
-    setStep('checkout');
+    setStep("checkout");
   }, [setStep]);
 
   // Calculate session statistics
   const sessionStats = useMemo(() => {
     const totalCards = retroCards.length;
-    const totalVotes = Object.values(votes).reduce((sum, count) => sum + count, 0);
+    const totalVotes = Object.values(votes).reduce(
+      (sum, count) => sum + count,
+      0
+    );
     const totalActionItems = actionItems.length;
-    const topicsCount = new Set(retroCards.map(card => card.topic).filter(Boolean)).size;
+    const topicsCount = new Set(
+      retroCards.map((card) => card.topic).filter(Boolean)
+    ).size;
 
     return {
       totalCards,
       totalVotes,
       totalActionItems,
-      topicsCount
+      topicsCount,
     };
   }, [retroCards, votes, actionItems]);
 
   const handleStartOver = () => {
     resetStore();
-    router.push('/');
+    router.push("/");
   };
 
   const handleBackToTopics = () => {
-    setStep('topics');
-    router.push('/topics');
+    setStep("topics");
+    router.push("/topics");
   };
 
   const containerVariants = {
@@ -51,40 +56,40 @@ export default function CheckoutPage(): JSX.Element {
       opacity: 1,
       transition: {
         staggerChildren: 0.2,
-        delayChildren: 0.1
-      }
-    }
+        delayChildren: 0.1,
+      },
+    },
   };
 
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       y: 0,
-      transition: { 
-        type: "spring", 
-        stiffness: 400, 
-        damping: 30 
-      }
-    }
+      transition: {
+        type: "spring" as const,
+        stiffness: 400,
+        damping: 30,
+      },
+    },
   };
 
   const statsVariants = {
     hidden: { opacity: 0, scale: 0.8 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       scale: 1,
-      transition: { 
-        type: "spring", 
-        stiffness: 400, 
+      transition: {
+        type: "spring" as const,
+        stiffness: 400,
         damping: 30,
-        delay: 0.3
-      }
-    }
+        delay: 0.3,
+      },
+    },
   };
 
   return (
-    <motion.div 
+    <motion.div
       className="w-full max-w-sm sm:max-w-2xl md:max-w-4xl lg:max-w-6xl mx-auto min-h-[calc(100vh-200px)] flex flex-col justify-center items-center p-4 sm:p-6 md:p-8"
       variants={containerVariants}
       initial="hidden"
@@ -97,7 +102,7 @@ export default function CheckoutPage(): JSX.Element {
           background: "linear-gradient(to right, #FFD166, #D497E8, #5DDAA4)",
           backgroundClip: "text",
           WebkitBackgroundClip: "text",
-          color: "transparent"
+          color: "transparent",
         }}
         variants={itemVariants}
       >
@@ -105,20 +110,22 @@ export default function CheckoutPage(): JSX.Element {
       </motion.h1>
 
       {/* Final Question Card */}
-      <motion.div 
+      <motion.div
         className="w-full max-w-2xl bg-transparent border-2 sm:border-3 pixelated p-6 sm:p-8 md:p-10 mb-8 sm:mb-12"
         style={{
-          borderImage: "linear-gradient(90deg, #FFD166 0%, #F79F79 50%, #F786A3 100%) 1"
+          borderImage:
+            "linear-gradient(90deg, #FFD166 0%, #F79F79 50%, #F786A3 100%) 1",
         }}
         variants={itemVariants}
       >
-        <h2 
+        <h2
           className="text-lg sm:text-xl md:text-2xl font-normal uppercase tracking-wide mb-6 sm:mb-8 pixelated text-center"
           style={{
-            background: "linear-gradient(90deg, #FFD166 0%, #F79F79 50%, #F786A3 100%)",
+            background:
+              "linear-gradient(90deg, #FFD166 0%, #F79F79 50%, #F786A3 100%)",
             backgroundClip: "text",
             WebkitBackgroundClip: "text",
-            color: "transparent"
+            color: "transparent",
           }}
         >
           FINAL QUESTION
@@ -127,20 +134,21 @@ export default function CheckoutPage(): JSX.Element {
           What are you most looking forward to in the next sprint?
         </p>
         <p className="text-base-content/70 text-sm sm:text-base pixelated text-center leading-relaxed">
-          Take a moment to think about the positive changes and improvements that lie ahead. 
-          Share this energy with your team as you move forward together.
+          Take a moment to think about the positive changes and improvements
+          that lie ahead. Share this energy with your team as you move forward
+          together.
         </p>
       </motion.div>
 
       {/* Session Summary */}
-      <motion.div 
+      <motion.div
         className="w-full max-w-3xl grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 mb-8 sm:mb-12"
         variants={statsVariants}
       >
         <div className="bg-transparent border-2 border-primary/30 p-4 text-center">
-          <div 
+          <div
             className="text-2xl sm:text-3xl font-bold pixelated mb-2"
-            style={{ color: '#FFD166' }}
+            style={{ color: "#FFD166" }}
           >
             {sessionStats.totalCards}
           </div>
@@ -150,9 +158,9 @@ export default function CheckoutPage(): JSX.Element {
         </div>
 
         <div className="bg-transparent border-2 border-secondary/30 p-4 text-center">
-          <div 
+          <div
             className="text-2xl sm:text-3xl font-bold pixelated mb-2"
-            style={{ color: '#D497E8' }}
+            style={{ color: "#D497E8" }}
           >
             {sessionStats.topicsCount}
           </div>
@@ -162,9 +170,9 @@ export default function CheckoutPage(): JSX.Element {
         </div>
 
         <div className="bg-transparent border-2 border-tertiary/30 p-4 text-center">
-          <div 
+          <div
             className="text-2xl sm:text-3xl font-bold pixelated mb-2"
-            style={{ color: '#5DDAA4' }}
+            style={{ color: "#5DDAA4" }}
           >
             {sessionStats.totalVotes}
           </div>
@@ -174,9 +182,9 @@ export default function CheckoutPage(): JSX.Element {
         </div>
 
         <div className="bg-transparent border-2 border-base-300 p-4 text-center">
-          <div 
+          <div
             className="text-2xl sm:text-3xl font-bold pixelated mb-2"
-            style={{ color: '#46B2E8' }}
+            style={{ color: "#46B2E8" }}
           >
             {sessionStats.totalActionItems}
           </div>
@@ -188,7 +196,7 @@ export default function CheckoutPage(): JSX.Element {
 
       {/* Icebreaker Reminder */}
       {icebreakerResponse && (
-        <motion.div 
+        <motion.div
           className="w-full max-w-2xl bg-base-200/30 border border-base-300 p-4 sm:p-6 mb-8"
           variants={itemVariants}
         >
@@ -202,7 +210,7 @@ export default function CheckoutPage(): JSX.Element {
       )}
 
       {/* Navigation Actions */}
-      <motion.div 
+      <motion.div
         className="flex flex-col sm:flex-row gap-4 sm:gap-6 w-full max-w-lg"
         variants={itemVariants}
       >
@@ -231,9 +239,9 @@ export default function CheckoutPage(): JSX.Element {
             px-6 py-3 sm:py-4 pixelated text-sm sm:text-base font-medium
             transition-all duration-200 min-h-[44px] flex items-center justify-center
           "
-          whileHover={{ 
+          whileHover={{
             scale: 1.02,
-            y: -1
+            y: -1,
           }}
           whileTap={{ scale: 0.98 }}
           aria-label="Start a new retrospective session"
@@ -243,13 +251,10 @@ export default function CheckoutPage(): JSX.Element {
       </motion.div>
 
       {/* Thank You Message */}
-      <motion.div 
-        className="text-center mt-8 sm:mt-12"
-        variants={itemVariants}
-      >
+      <motion.div className="text-center mt-8 sm:mt-12" variants={itemVariants}>
         <p className="text-base-content/60 pixelated text-xs sm:text-sm max-w-lg mx-auto leading-relaxed">
-          Thank you for taking the time to reflect and improve together. 
-          Great teams are built through honest communication and continuous growth.
+          Thank you for taking the time to reflect and improve together. Great
+          teams are built through honest communication and continuous growth.
         </p>
       </motion.div>
 
@@ -258,10 +263,10 @@ export default function CheckoutPage(): JSX.Element {
         className="absolute top-20 left-1/2 transform -translate-x-1/2 text-4xl"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: [0, 1, 0], y: [-20, -60, -100] }}
-        transition={{ 
-          duration: 3, 
+        transition={{
+          duration: 3,
           delay: 1,
-          ease: "easeOut"
+          ease: "easeOut",
         }}
       >
         ✨
@@ -270,15 +275,15 @@ export default function CheckoutPage(): JSX.Element {
       <motion.div
         className="absolute top-32 right-1/4 text-3xl"
         initial={{ opacity: 0, rotate: 0 }}
-        animate={{ 
-          opacity: [0, 1, 0], 
+        animate={{
+          opacity: [0, 1, 0],
           rotate: [0, 180, 360],
-          y: [0, -30, -60] 
+          y: [0, -30, -60],
         }}
-        transition={{ 
-          duration: 2.5, 
+        transition={{
+          duration: 2.5,
           delay: 1.5,
-          ease: "easeOut"
+          ease: "easeOut",
         }}
       >
         🎊
@@ -287,15 +292,15 @@ export default function CheckoutPage(): JSX.Element {
       <motion.div
         className="absolute top-32 left-1/4 text-3xl"
         initial={{ opacity: 0, scale: 0 }}
-        animate={{ 
-          opacity: [0, 1, 0], 
+        animate={{
+          opacity: [0, 1, 0],
           scale: [0, 1.2, 0],
-          y: [0, -40, -80] 
+          y: [0, -40, -80],
         }}
-        transition={{ 
-          duration: 2, 
+        transition={{
+          duration: 2,
           delay: 2,
-          ease: "easeOut"
+          ease: "easeOut",
         }}
       >
         🌟

@@ -153,7 +153,7 @@ function ActionItemCard({ actionItem }: ActionItemCardProps) {
       animate={{ opacity: 1, scale: 1, y: 0 }}
       whileHover={{ scale: 1.02, y: -2 }}
       transition={{ 
-        type: "spring", 
+        type: "spring" as const, 
         stiffness: 400, 
         damping: 30,
         duration: 0.6

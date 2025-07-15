@@ -218,8 +218,27 @@ className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 md:gap-
 ### TypeScript
 - Strict mode enabled with path mapping
 - Define proper interfaces for all props
-- Use explicit return types for components
+- **AVOID explicit JSX.Element return types** - TypeScript infers them automatically in React 19
 - Include responsive prop variations where needed
+
+### Common React 19 TypeScript Fixes
+```typescript
+// ❌ Bad - Explicit JSX.Element return type (breaks in React 19)
+export default function MyComponent(): JSX.Element {
+  return <div>Hello</div>;
+}
+
+// ✅ Good - Let TypeScript infer the return type
+export default function MyComponent() {
+  return <div>Hello</div>;
+}
+
+// ❌ Bad - Framer Motion type issues
+transition={{ type: "spring", stiffness: 400, damping: 30 }}
+
+// ✅ Good - Add 'as const' to fix type inference
+transition={{ type: "spring" as const, stiffness: 400, damping: 30 }}
+```
 
 ### Performance
 - Turbopack enabled for faster development builds

@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useRetroStore } from "@/store/retroStore";
 
-export default function IcebreakerPage(): JSX.Element {
+export default function IcebreakerPage() {
   const router = useRouter();
   const { icebreakerResponse, setIcebreakerResponse, setStep } = useRetroStore();
   const [localResponse, setLocalResponse] = useState(icebreakerResponse);
@@ -41,7 +41,7 @@ export default function IcebreakerPage(): JSX.Element {
       opacity: 1, 
       y: 0,
       transition: { 
-        type: "spring", 
+        type: "spring" as const, 
         stiffness: 400, 
         damping: 30 
       }

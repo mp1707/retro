@@ -19,7 +19,7 @@ export function Modal({
   children, 
   size = 'md',
   showCloseButton = true 
-}: ModalProps): JSX.Element | null {
+}: ModalProps) {
   
   if (!isOpen) return null;
 
@@ -62,7 +62,7 @@ export function Modal({
           initial={{ scale: 0.9, opacity: 0, y: 20 }}
           animate={{ scale: 1, opacity: 1, y: 0 }}
           exit={{ scale: 0.9, opacity: 0, y: 20 }}
-          transition={{ type: "spring", stiffness: 400, damping: 30 }}
+          transition={{ type: "spring" as const, stiffness: 400, damping: 30 }}
           onClick={(e) => e.stopPropagation()}
         >
           {/* Modal Header */}
@@ -122,7 +122,7 @@ export function FormModal({
   cancelLabel = 'Cancel',
   children,
   size = 'md'
-}: FormModalProps): JSX.Element | null {
+}: FormModalProps) {
   
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -196,7 +196,7 @@ export function ConfirmModal({
   confirmLabel = 'Confirm',
   cancelLabel = 'Cancel',
   variant = 'default'
-}: ConfirmModalProps): JSX.Element | null {
+}: ConfirmModalProps) {
   
   const handleConfirm = () => {
     onConfirm();

@@ -73,7 +73,7 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ 
-              type: "spring", 
+              type: "spring" as const, 
               stiffness: 400, 
               damping: 30
             }}

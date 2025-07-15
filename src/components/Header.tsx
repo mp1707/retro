@@ -52,7 +52,7 @@ export function Header() {
           className="hidden lg:flex justify-between items-center"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ type: "spring", stiffness: 400, damping: 30 }}
+          transition={{ type: "spring" as const, stiffness: 400, damping: 30 }}
         >
           <div className="flex items-center space-x-6 lg:space-x-8">
             <a href="#" className="text-lg text-base-content/70 hover:text-base-content hover:underline transition-colors pixelated">

@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useRetroStore } from "@/store/retroStore";
 import { Card } from "@/components/Card";
 
-export default function LastRetroPage(): JSX.Element {
+export default function LastRetroPage() {
   const router = useRouter();
   const { lastRetroActionItems, setStep } = useRetroStore();
 
@@ -37,7 +37,7 @@ export default function LastRetroPage(): JSX.Element {
       opacity: 1, 
       y: 0,
       transition: { 
-        type: "spring", 
+        type: "spring" as const, 
         stiffness: 400, 
         damping: 30 
       }
@@ -75,7 +75,7 @@ export default function LastRetroPage(): JSX.Element {
             key={item.id} 
             variants={itemVariants}
             whileHover={{ scale: 1.02, y: -2 }}
-            transition={{ type: "spring", stiffness: 400, damping: 30 }}
+            transition={{ type: "spring" as const, stiffness: 400, damping: 30 }}
           >
             <Card 
               title={`✓ ${item.topic.toUpperCase()}`}

@@ -131,7 +131,7 @@ function RetroCardDisplay({ card, variant }: RetroCardDisplayProps) {
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       whileHover={{ scale: 1.02, y: -2 }}
-      transition={{ type: "spring", stiffness: 400, damping: 30 }}
+      transition={{ type: "spring" as const, stiffness: 400, damping: 30 }}
     >
       <p className="text-base-content leading-relaxed pixelated text-sm sm:text-base flex-grow">
         {card.content}
@@ -147,7 +147,7 @@ function RetroCardDisplay({ card, variant }: RetroCardDisplayProps) {
   );
 }
 
-export default function RealRetroPage(): JSX.Element {
+export default function RealRetroPage() {
   const router = useRouter();
   const { retroCards, addRetroCard, addTopicsToCards, setStep } = useRetroStore();
   const [modalState, setModalState] = useState<{
@@ -208,7 +208,7 @@ export default function RealRetroPage(): JSX.Element {
       opacity: 1, 
       y: 0,
       transition: { 
-        type: "spring", 
+        type: "spring" as const, 
         stiffness: 400, 
         damping: 30 
       }
