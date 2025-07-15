@@ -4,14 +4,41 @@ import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useRetroStore, RetroStep } from "@/store/retroStore";
 
-// Icon component for pixelarticons SVGs
-function PixelIcon({ name, className }: { name: string; className?: string }) {
+// Icon component for pixelarticons SVGs with gradient support
+function PixelIcon({ name, className, style, gradientType }: { 
+  name: string; 
+  className?: string; 
+  style?: React.CSSProperties;
+  gradientType?: 'primary' | 'secondary' | 'tertiary' | 'none';
+}) {
+  // Define gradient colors based on design system
+  const getGradientStyle = () => {
+    if (gradientType === 'primary') {
+      return {
+        filter: 'brightness(0) saturate(100%) invert(84%) sepia(55%) saturate(405%) hue-rotate(316deg) brightness(105%) contrast(101%)', // Primary gradient approximation
+      };
+    } else if (gradientType === 'secondary') {
+      return {
+        filter: 'brightness(0) saturate(100%) invert(60%) sepia(77%) saturate(1278%) hue-rotate(254deg) brightness(98%) contrast(103%)', // Secondary gradient approximation
+      };
+    } else if (gradientType === 'tertiary') {
+      return {
+        filter: 'brightness(0) saturate(100%) invert(64%) sepia(85%) saturate(355%) hue-rotate(78deg) brightness(98%) contrast(95%)', // Tertiary gradient approximation
+      };
+    }
+    return {};
+  };
+
   return (
     <img
       src={`/icons/${name}.svg`}
       alt=""
       className={`${className} pixelated`}
-      style={{ imageRendering: "pixelated" }}
+      style={{ 
+        imageRendering: "pixelated", 
+        ...getGradientStyle(),
+        ...style 
+      }}
     />
   );
 }
@@ -67,70 +94,116 @@ export function RetroProgressBar() {
 
   const currentStepIndex = steps.findIndex((step) => step.id === currentStep);
 
+  // Helper function to get step state styling
+  const getStepStyling = (index: number) => {
+    const isActive = index === currentStepIndex;
+    const isCompleted = index < currentStepIndex;
+    const isUpcoming = index > currentStepIndex;
+
+    if (isActive) {
+      return {
+        borderClass: "border-gradient-primary border-2 md:border-3",
+        textClass: "text-gradient-primary",
+        numberClass: "text-gradient-primary",
+        iconGradientType: 'primary' as const,
+        iconOpacity: 1
+      };
+    } else if (isCompleted) {
+      return {
+        borderClass: "border-gradient-secondary border-2",
+        textClass: "text-gradient-secondary",
+        numberClass: "text-gradient-secondary",
+        iconGradientType: 'secondary' as const,
+        iconOpacity: 1
+      };
+    } else if (isUpcoming) {
+      return {
+        borderClass: "border-gradient-tertiary border-1",
+        textClass: "text-base-content/60",
+        numberClass: "text-base-content/60",
+        iconGradientType: 'tertiary' as const,
+        iconOpacity: 0.6
+      };
+    } else {
+      return {
+        borderClass: "border-base-300 border-1",
+        textClass: "text-base-content/40",
+        numberClass: "text-base-content/40",
+        iconGradientType: 'none' as const,
+        iconOpacity: 0.4
+      };
+    }
+  };
+
+  // Helper function to get connection line styling
+  const getConnectionStyling = (index: number) => {
+    const isActive = index === currentStepIndex;
+    const isCompleted = index < currentStepIndex;
+
+    if (isCompleted) {
+      return "linear-gradient(90deg, #F79F79 0%, #D497E8 50%, #A29BFE 100%)";
+    } else if (isActive) {
+      return "linear-gradient(90deg, #FFD166 0%, #F79F79 50%, #F786A3 100%)";
+    } else {
+      return "transparent";
+    }
+  };
+
   return (
     <motion.div
-      className="w-full bg-base-200/30 border-b-2 border-base-300 py-4 sm:py-6"
+      className="w-full bg-transparent border-b-2 border-base-300/50 py-4 sm:py-6"
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
     >
       <div className="max-w-sm sm:max-w-2xl md:max-w-4xl lg:max-w-6xl mx-auto px-4 sm:px-6 md:px-8">
-        {/* Mobile View - Enhanced Segmented Progress */}
+        {/* Mobile View - Sleek Minimalist Progress */}
         <div className="block sm:hidden">
-          <div className="flex items-center justify-between mb-3">
-            <div className="text-gradient-tertiary text-xs sm:text-sm pixelated font-medium">
+          <div className="flex items-center justify-between mb-4">
+            <div className="text-base-content/60 text-xs pixelated font-medium">
               Step {currentStepIndex + 1} of {steps.length}
             </div>
-            <div className="text-gradient-primary text-sm sm:text-base pixelated font-bold">
+            <div className="text-gradient-primary text-sm pixelated font-bold">
               {steps[currentStepIndex]?.label}
             </div>
           </div>
           
-          {/* Segmented Progress Indicator */}
-          <div className="flex gap-1">
-            {steps.map((_, index) => {
+          {/* Sleek Progress Icons */}
+          <div className="flex items-center justify-center gap-3">
+            {steps.map((step, index) => {
+              const styling = getStepStyling(index);
               const isActive = index === currentStepIndex;
-              const isCompleted = index < currentStepIndex;
               
               return (
-                <motion.div
-                  key={index}
+                <motion.button
+                  key={step.id}
+                  onClick={() => handleStepClick(step)}
                   className={`
-                    flex-1 h-2 pixelated relative overflow-hidden
-                    ${isCompleted ? 'bg-base-300' : isActive ? 'bg-base-300' : 'bg-base-300/50'}
+                    relative flex items-center justify-center
+                    w-8 h-8 sm:w-10 sm:h-10
+                    bg-transparent ${styling.borderClass}
+                    pixelated transition-all duration-300
+                    hover:scale-110 active:scale-95
                   `}
-                  initial={{ scaleX: 0 }}
-                  animate={{ scaleX: 1 }}
-                  transition={{ delay: index * 0.1, duration: 0.3 }}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                  aria-label={`Go to ${step.label}`}
                 >
-                  <motion.div
-                    className="h-full"
-                    style={{
-                      background: isCompleted 
-                        ? "linear-gradient(90deg, #F79F79 0%, #D497E8 50%, #A29BFE 100%)" // Secondary (Orchid)
-                        : isActive 
-                        ? "linear-gradient(90deg, #FFD166 0%, #F79F79 50%, #F786A3 100%)" // Primary (Sunset)
-                        : "transparent"
-                    }}
-                    initial={{ width: 0 }}
-                    animate={{
-                      width: isCompleted ? "100%" : isActive ? "100%" : "0%",
-                    }}
-                    transition={{ 
-                      delay: index * 0.1 + 0.2, 
-                      duration: 0.5, 
-                      ease: "easeInOut" 
-                    }}
+                  <PixelIcon 
+                    name={step.icon} 
+                    className="w-4 h-4"
+                    gradientType={styling.iconGradientType}
+                    style={{ opacity: styling.iconOpacity }}
                   />
                   
                   {/* Active step pulse effect */}
                   {isActive && (
                     <motion.div
-                      className="absolute inset-0"
-                      style={{
-                        background: "linear-gradient(90deg, #FFD166 0%, #F79F79 50%, #F786A3 100%)",
+                      className="absolute inset-0 border-gradient-primary border-1"
+                      animate={{ 
+                        scale: [1, 1.3, 1],
+                        opacity: [0.8, 0.2, 0.8]
                       }}
-                      animate={{ opacity: [0.3, 0.7, 0.3] }}
                       transition={{ 
                         duration: 2, 
                         repeat: Infinity,
@@ -138,61 +211,47 @@ export function RetroProgressBar() {
                       }}
                     />
                   )}
-                </motion.div>
+                </motion.button>
               );
             })}
           </div>
         </div>
 
-        {/* Desktop View - Enhanced Full Progress Bar */}
+        {/* Desktop View - Sleek Horizontal Progress */}
         <div className="hidden sm:flex items-center justify-between">
           {steps.map((step, index) => {
-            const isActive = step.id === currentStep;
+            const styling = getStepStyling(index);
+            const isActive = index === currentStepIndex;
             const isCompleted = index < currentStepIndex;
 
             return (
               <div key={step.id} className="flex items-center">
-                {/* Step Icon Button */}
+                {/* Step Circle with Number/Icon */}
                 <motion.button
                   onClick={() => handleStepClick(step)}
                   className={`
                     relative flex items-center justify-center
-                    min-h-[44px] min-w-[44px] md:h-12 md:w-12 lg:h-16 lg:w-16
+                    min-h-[44px] min-w-[44px] md:h-12 md:w-12 lg:h-14 lg:w-14
+                    bg-transparent ${styling.borderClass}
                     pixelated transition-all duration-300
-                    ${
-                      isActive
-                        ? "border-gradient-primary bg-transparent scale-110 shadow-lg"
-                        : isCompleted
-                        ? "border-gradient-secondary bg-transparent hover:scale-105"
-                        : "border-2 border-base-300 bg-transparent hover:border-base-content/50 hover:scale-105"
-                    }
+                    hover:scale-105 active:scale-95
                   `}
-                  style={{
-                    background: isActive 
-                      ? "linear-gradient(90deg, #FFD166 0%, #F79F79 50%, #F786A3 100%)" 
-                      : isCompleted 
-                      ? "linear-gradient(90deg, #F79F79 0%, #D497E8 50%, #A29BFE 100%)" 
-                      : "transparent"
-                  }}
-                  whileHover={{ 
-                    scale: isActive ? 1.15 : 1.08,
-                    transition: { duration: 0.2 }
-                  }}
+                  whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   aria-label={`Go to ${step.label}`}
                 >
+                  {/* Always show the original retro icon */}
                   <PixelIcon 
                     name={step.icon} 
-                    className={`
-                      w-5 h-5 md:w-6 md:h-6 lg:w-8 lg:h-8
-                      ${isActive || isCompleted ? "filter brightness-0" : ""}
-                    `}
+                    className="w-4 h-4 md:w-5 md:h-5 lg:w-6 lg:h-6"
+                    gradientType={styling.iconGradientType}
+                    style={{ opacity: styling.iconOpacity }}
                   />
 
                   {/* Active step pulse ring */}
                   {isActive && (
                     <motion.div
-                      className="absolute inset-0 border-2 border-gradient-primary"
+                      className="absolute inset-0 border-gradient-primary border-1"
                       animate={{ 
                         scale: [1, 1.2, 1],
                         opacity: [0.8, 0.3, 0.8]
@@ -204,53 +263,23 @@ export function RetroProgressBar() {
                       }}
                     />
                   )}
-
-                  {/* Step number indicator */}
-                  <div 
-                    className={`
-                      absolute -top-2 -right-2 w-6 h-6 flex items-center justify-center
-                      text-xs pixelated font-bold rounded-none
-                      ${isActive 
-                        ? "bg-primary text-primary-content" 
-                        : isCompleted 
-                        ? "bg-secondary text-secondary-content"
-                        : "bg-base-300 text-base-content/70"
-                      }
-                    `}
-                  >
-                    {index + 1}
-                  </div>
                 </motion.button>
 
                 {/* Step Label */}
                 <div className="ml-3 mr-6">
-                  <div
-                    className={`
-                      text-xs sm:text-sm lg:text-base pixelated font-medium
-                      ${isActive 
-                        ? "text-gradient-primary" 
-                        : isCompleted 
-                        ? "text-gradient-secondary" 
-                        : "text-base-content/70"
-                      }
-                    `}
-                  >
+                  <div className={`text-xs sm:text-sm lg:text-base pixelated font-medium ${styling.textClass}`}>
                     {step.label}
                   </div>
                 </div>
 
-                {/* Enhanced Connector Line */}
+                {/* Connection Line */}
                 {index < steps.length - 1 && (
                   <div className="flex-1 mx-4 relative">
-                    <div className="h-1 bg-base-300 relative overflow-hidden">
+                    <div className="h-0.5 bg-base-300/50 relative overflow-hidden">
                       <motion.div
                         className="h-full absolute inset-0"
                         style={{
-                          background: isCompleted 
-                            ? "linear-gradient(90deg, #F79F79 0%, #D497E8 50%, #A29BFE 100%)" // Secondary (Orchid)
-                            : isActive 
-                            ? "linear-gradient(90deg, #FFD166 0%, #F79F79 50%, #F786A3 100%)" // Primary (Sunset)
-                            : "transparent"
+                          background: getConnectionStyling(index)
                         }}
                         initial={{ width: 0 }}
                         animate={{
@@ -259,27 +288,25 @@ export function RetroProgressBar() {
                         transition={{ duration: 0.6, ease: "easeInOut" }}
                       />
                       
-                      {/* Animated flowing dots for active connection */}
+                      {/* Subtle animated pulse for active connection */}
                       {isActive && (
                         <motion.div
                           className="absolute inset-0 overflow-hidden"
                         >
-                          {[...Array(3)].map((_, i) => (
-                            <motion.div
-                              key={i}
-                              className="absolute w-1 h-1 bg-white rounded-none top-0"
-                              animate={{
-                                x: [0, "300%"],
-                                opacity: [0, 1, 0]
-                              }}
-                              transition={{
-                                duration: 2,
-                                repeat: Infinity,
-                                delay: i * 0.6,
-                                ease: "linear"
-                              }}
-                            />
-                          ))}
+                          <motion.div
+                            className="absolute w-2 h-full opacity-60"
+                            style={{
+                              background: "linear-gradient(90deg, transparent 0%, #FFD166 50%, transparent 100%)",
+                            }}
+                            animate={{
+                              x: ["-100%", "200%"],
+                            }}
+                            transition={{
+                              duration: 2,
+                              repeat: Infinity,
+                              ease: "linear"
+                            }}
+                          />
                         </motion.div>
                       )}
                     </div>
